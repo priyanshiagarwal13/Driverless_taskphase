@@ -1,6 +1,4 @@
 import csv, operator
-
-
 with open('names.csv', mode ='r')as file:
   csvFile = csv.reader(file)
   for lines in csvFile:
