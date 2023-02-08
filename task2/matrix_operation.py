@@ -1,21 +1,102 @@
-class operations:
-    def transposeMatrix(m):
-        return map(list,zip(*m))
-    
-    def getMatrixMinor(m,i,j):
-        return [row[:j] + row[j+1:] for row in (m[:i]+m[i+1:])]
+N = 4
+def Cofactor(A, temp, p, q, n):
 
-    def calc_det(m):
-        if len(m) == 2:
-            return m[0][0]*m[1][1]-m[0][1]*m[1][0]
-        determinant = 0
-        for c in range(len(m)):
-            determinant += ((-1)**c)*m[0][c]*calc_det(getMatrixMinor(m,0,c))
-        return determinant
-    
-    def calc_inv(m):
-        determinant = calc_det(m)
-        if len(m) == 2:
-            return [[m[1][1]/determinant, -1*m[0][1]/determinant],
-                [-1*m[1][0]/determinant, m[0][0]/determinant]]
-                
+	i = 0
+	j = 0
+
+	
+	for row in range(n):
+
+		for col in range(n):
+
+			if (row != p and col != q):
+
+				temp[i][j] = A[row][col]
+				j += 1
+				if (j == n - 1):
+					j = 0
+					i += 1
+def determinant(A, n):
+
+	D = 0 
+	if (n == 1):
+		return A[0][0]
+
+	temp = [] #for cofactors
+	for i in range(N):
+		temp.append([None for _ in range(N)])
+
+	sign = 1 #sign multiplier
+
+	for f in range(n):
+		Cofactor(A, temp, 0, f, n)
+		D += sign * A[0][f] * determinant(temp, n - 1)
+		sign = -sign
+
+	return D
+
+def adjoint(A, adj):
+
+	if (N == 1):
+		adj[0][0] = 1
+		return
+	sign = 1
+	temp = [] 
+	for i in range(N):
+		temp.append([None for _ in range(N)])
+
+	for i in range(N):
+		for j in range(N):
+			Cofactor(A, temp, i, j, N)
+			sign = [1, -1][(i + j) % 2]
+			adj[j][i] = (sign)*(determinant(temp, N-1))
+def inverse(A, inverse):
+	det = determinant(A, N)
+	if (det == 0):
+		print("Singular matrix, can't find its inverse")
+		return False
+	adj = []
+	for i in range(N):
+		adj.append([None for _ in range(N)])
+	adjoint(A, adj)
+
+	#inverse(A) = adj(A)/det(A)
+	for i in range(N):
+		for j in range(N):
+			inverse[i][j] = adj[i][j] / det
+
+	return True
+def display(A):
+	for i in range(N):
+		for j in range(N):
+			print(A[i][j], end=" ")
+		print()
+
+
+def displays(A):
+	for i in range(N):
+		for j in range(N):
+			print(round(A[i][j], 6), end=" ")
+		print()
+
+A = [[2, 2, 4, 8], [10, 11, 12, 13], [-13, 11, 50, 30], [3, -18, -90, 44]]
+adj = [None for _ in range(N)]
+inv = [None for _ in range(N)]
+
+for i in range(N):
+	adj[i] = [None for _ in range(N)]
+	inv[i] = [None for _ in range(N)]
+
+
+print("Input matrix :")
+display(A)
+
+print("\nThe Adjoint :")
+adjoint(A, adj)
+display(adj)
+
+print("\nThe Inverse :")
+if (inverse(A, inv)):
+	displays(inv)
+
+print("\nThe determinant is:")              
