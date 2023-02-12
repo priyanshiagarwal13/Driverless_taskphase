@@ -28,3 +28,15 @@ def remove(string):
     return "".join(string.split())
 string = listToString(name)
 print(remove(string))
+
+str_ = ""
+min_diff = 10 ** 6 
+for i in range(len(name)):
+    str_ += name[i]
+str_ = str_.replace(" ", "")
+print(str_)
+for i in range(len(str_) - 1):
+    diff = abs(ord(str_[i + 1]) - ord(str_[i]))
+    if (diff < min_diff) and (diff != 0):
+        min_diff = diff
+print(min_diff)
