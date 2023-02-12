@@ -50,7 +50,8 @@ def adjoint(A, adj):
 			Cofactor(A, temp, i, j, N)
 			sign = [1, -1][(i + j) % 2]
 			adj[j][i] = (sign)*(determinant(temp, N-1))
-def inverse(A, inverse):
+   
+def inverse(A, inverse=0):
 	det = determinant(A, N)
 	if (det == 0):
 		print("Singular matrix, can't find its inverse")
@@ -60,12 +61,12 @@ def inverse(A, inverse):
 		adj.append([None for _ in range(N)])
 	adjoint(A, adj)
 
-	#inverse(A) = adj(A)/det(A)
+	#inverse(A) = adj(A)/detA)
 	for i in range(N):
 		for j in range(N):
 			inverse[i][j] = adj[i][j] / det
 
-	return True
+	return inverse
 def display(A):
 	for i in range(N):
 		for j in range(N):
@@ -78,8 +79,24 @@ def displays(A):
 		for j in range(N):
 			print(round(A[i][j], 6), end=" ")
 		print()
+  
+
+def display(B):
+	for i in range(N):
+		for j in range(N):
+			print(B[i][j], end=" ")
+		print()
+
+
+def displays(B):
+	for i in range(N):
+		for j in range(N):
+			print(round(B[i][j], 6), end=" ")
+		print()
+  
 
 A = [[2, 2, 4, 8], [10, 11, 12, 13], [-13, 11, 50, 30], [3, -18, -90, 44]]
+B = [[2, 2, 4, 8], [10, 11, 12, 13], [-13, 11, 50, 30], [3, -18, -90, 44]]
 adj = [None for _ in range(N)]
 inv = [None for _ in range(N)]
 
@@ -95,8 +112,12 @@ print("\nThe Adjoint :")
 adjoint(A, adj)
 display(adj)
 
-print("\nThe Inverse :")
+print("\nThe Inverse of A:")
 if (inverse(A, inv)):
 	displays(inv)
+ 
+print("\nThe Inverse of B :")
+if (inverse(B, inv)):
+	displays(inv)
 
-print("\nThe determinant is:")              
+print("\nThe determinant is:")          
