@@ -1,34 +1,24 @@
-n = int(input())
-n1 = n
-n2 = n - 1
-i = 1
-while i<=n1:
-    j = 1
-    while j<= i -1:
-        print(' ',end ='')
-        j +=1
-    k = 1
-    p = i
-    while k <=n1 -i+1:
-        print(p,end='')
-        k+=1
-        p +=1
+n=int(input("Number of rows: "))
+
+m = list(range(1, n+1))
+n = list(range(2, n+1))
+q = list(reversed(n))
+
+for i in q:
+    y=n-i
+    z=(2*i)-1
+    for j in range(y):
+        print(" ",end="")
+    for j in range(z,0,-1):
+        print(j,end="")
     print()
-    i+=1
-    
-y = 1
-while y<=n2:
-    j = 1
-    while j<= n2 -y:
-        print(' ',end ='')
-        j +=1
-    k = 1
-    p = n2 -y +1
-    while k <=y +1:
-        print(p,end='')
-        k+=1
-        p+=1
-    
+
+for i in m:
+    y=n-i
+    z=(2*i)-1
+    for j in range(y):
+        print(" ",end="")
+    for j in range(z,0,-1):
+        print(j,end="")
     print()
-    y +=1
     
